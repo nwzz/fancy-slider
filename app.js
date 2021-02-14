@@ -5,6 +5,7 @@ const searchBtn = document.getElementById('search-btn');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
 const searchField = document.getElementById('search');
+const durationField = document.getElementById('duration');
 // selected image 
 let sliders = [];
 
@@ -12,7 +13,11 @@ searchField.addEventListener("keypress", function(event){
   if(event.key === 'Enter'){
     document.getElementById('search-btn').click();
   }
-
+})
+durationField.addEventListener("keypress", function(event){
+  if(event.key === 'Enter'){
+    document.getElementById('create-slider').click();
+  }
 })
 
 
@@ -51,13 +56,13 @@ const getImages = (query) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.toggle('added');
+  element.classList.add('added');
  
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    element.classList.remove('added');
+     alert('Hey, Already added !')
   }
 }
 var timer
@@ -89,13 +94,20 @@ const createSlider = () => {
     alt="">`;
     sliderContainer.appendChild(item)
   })
-  changeSlide(0)
+  if(duration < 0){
+   alert('not a valid time')
+   return ;
+  }
+  else{
+    changeSlide(0)
   timer = setInterval(function () {
-    if(duration > 0){
+    
       slideIndex++;
     changeSlide(slideIndex);
-    }
     }, duration);
+   
+  }
+  
 }
 
 // change slider index 
